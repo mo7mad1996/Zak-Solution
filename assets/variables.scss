@@ -2,3 +2,19 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+@keyframes land {
+  0%,
+  10%,
+  20%,
+  30% {
+    background-color: white;
+    transform: scale(40);
+  }
+}
+
+@keyframes fadein {
+  0%,
+  30% {
+    opacity: 0;
+  }
+}
