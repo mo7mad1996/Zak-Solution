@@ -1,23 +1,36 @@
 <template>
-  <header class="baseHeader" :class="pos">
+  <header class="baseHeader" :class="[pos, $route.name]">
     <!-- left -->
-    <v-btn plain class="left">Right</v-btn>
+    <nuxt-link to="Left" class="Left">
+      <v-btn plain height="100%" width="100%" @click="setPos('fixed')"
+        >Left</v-btn
+      >
+    </nuxt-link>
 
-    <div class="logo-container">
-      <v-btn icon="mdi-alpha-z-circle" class="button"> </v-btn>
-    </div>
+    <nuxt-link to="/" class="logo-container">
+      <v-btn icon class="button" @click="setPos('static')">
+        <v-icon>mdi-alpha-z-circle</v-icon>
+      </v-btn>
+    </nuxt-link>
 
     <!-- right -->
-    <v-btn plain class="right">right</v-btn>
+    <nuxt-link to="Right" class="Right">
+      <v-btn plain height="100%" width="100%" @click="setPos('fixed')">
+        Right
+      </v-btn>
+    </nuxt-link>
   </header>
 </template>
 
 <script>
 // Vuex
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: mapGetters('siteBase', ['pos']),
+  methods: {
+    ...mapActions('siteBase', ['setPos']),
+  },
 }
 </script>
 
@@ -26,6 +39,36 @@ export default {
   display: flex;
   align-items: center;
   overflow: hidden;
+  transition: 1s;
+
+  &::after,
+  &::after {
+    content: '';
+    z-index: 3;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .Left,
+  .Right {
+    transition: 0.8s;
+
+    &::after,
+    &::after {
+      content: '';
+      z-index: 3;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+  }
 
   @media (max-width: 700px) {
     flex-direction: column;
@@ -36,24 +79,24 @@ export default {
     height: 100vh;
 
     @media (max-width: 700px) {
-      .right {
+      .Right {
         margin-top: -40px;
       }
-      .left {
+      .Left {
         margin-bottom: -40px;
       }
     }
     @media (min-width: 700px) {
-      .right {
+      .Right {
         margin-left: -40px;
       }
-      .left {
+      .Left {
         margin-right: -40px;
       }
     }
 
-    .left,
-    .right {
+    .Left,
+    .Right {
       flex: 1;
       position: relative;
       height: 100%;
@@ -66,22 +109,10 @@ export default {
       }
     }
 
-    .right::after,
-    .left::after {
-      content: '';
-      z-index: 3;
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-    }
-
-    .right::after {
+    .Right::after {
       background: #3b6ce340;
     }
-    .left::after {
+    .Left::after {
       background: #e33b6c40;
     }
 
@@ -112,6 +143,40 @@ export default {
         img {
           // scale: 1.6;
         }
+      }
+    }
+  }
+
+  &.fixed {
+    width: 100%;
+    display: flex;
+    height: 50px;
+    position: relative;
+
+    .Left,
+    .Right {
+      flex: 1;
+    }
+
+    &.Right {
+      &::after {
+        content: '';
+        background: #3b6ce340;
+      }
+
+      .Left {
+        flex: 0;
+      }
+    }
+
+    &.Left {
+      &::after {
+        content: '';
+        background: #e33b6c40;
+      }
+
+      .Right {
+        flex: 0;
       }
     }
   }

@@ -10,8 +10,12 @@ const state = () => {
   getters = {
     pos: (state) => state.headerPos,
   },
-  mutations = {},
-  actions = {}
+  mutations = {
+    setPos: (state, val) => (state.headerPos = val),
+  },
+  actions = {
+    setPos: ({ commit }, val) => commit('setPos', val),
+  }
 
 const store = {
   state,
