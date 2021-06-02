@@ -1,12 +1,16 @@
 <template>
-  <header class="baseHeader" :class="[pos, $route.name]">
+  <header
+    class="baseHeader"
+    :class="[$route.name == 'index' ? pos : 'fixed', $route.name]"
+  >
     <!-- left -->
     <nuxt-link to="Left" class="Left">
-      <v-btn plain height="100%" width="100%" @click="setPos('fixed')"
-        >Left</v-btn
-      >
+      <v-btn plain height="100%" width="100%" @click="setPos('fixed')">
+        Left
+      </v-btn>
     </nuxt-link>
 
+    <!-- Logo -->
     <nuxt-link to="/" class="logo-container">
       <v-btn icon class="button" @click="setPos('static')">
         <v-icon>mdi-alpha-z-circle</v-icon>
@@ -39,7 +43,7 @@ export default {
   display: flex;
   align-items: center;
   overflow: hidden;
-  transition: 1s;
+  transition: 0.8s;
 
   &::after,
   &::after {
@@ -102,7 +106,7 @@ export default {
       height: 100%;
       width: 100%;
       animation: fadein 3s ease;
-      transition: 0.5s;
+      transition: 0.8s;
 
       &:hover {
         flex: 1.2;
@@ -126,14 +130,14 @@ export default {
       width: 80px;
       height: 80px;
       animation: land 3s ease forwards;
-      transition: 0.3s;
+      transition: 0.8s;
       border-radius: 50%;
       overflow: visible;
 
       img {
         scale: 1;
         background: white;
-        transition: 0.3s;
+        transition: 0.8s;
         padding: 5px;
       }
 
