@@ -5,21 +5,59 @@
   >
     <!-- left -->
     <nuxt-link to="Left" class="Left">
-      <v-btn plain height="100%" width="100%" @click="setPos('fixed')">
+      <v-btn
+        :dark="dark"
+        plain
+        height="100%"
+        width="100%"
+        @click="setPos('fixed')"
+      >
         Left
       </v-btn>
     </nuxt-link>
 
     <!-- Logo -->
-    <nuxt-link to="/" class="logo-container">
-      <v-btn icon class="button" @click="setPos('static')">
-        <v-icon>mdi-alpha-z-circle</v-icon>
+    <div
+      to="/"
+      ref="logo"
+      class="logo-container anmation"
+      @animationend="anmationend"
+    >
+      <v-btn :dark="dark" class="set" icon>
+        <v-icon>mdi-google-translate</v-icon>
       </v-btn>
-    </nuxt-link>
+
+      <nuxt-link to="/">
+        <v-btn
+          text
+          color="transparent"
+          class="button pa-0"
+          @click="setPos('static')"
+          :dark="dark"
+        >
+          <!-- <v-icon>mdi-alpha-z-circle</v-icon> -->
+          <img
+            src="https://cdn.dribbble.com/users/1309677/screenshots/13268859/media/f8d2212cbba4a41e8a07fe531bb96b46.png?compress=1&resize=1600x1200"
+            alt=""
+            class="logo"
+          />
+        </v-btn>
+      </nuxt-link>
+
+      <v-btn class="set" @click="toggledark" :dark="dark" icon>
+        <v-icon>mdi-lamp</v-icon>
+      </v-btn>
+    </div>
 
     <!-- right -->
     <nuxt-link to="Right" class="Right">
-      <v-btn plain height="100%" width="100%" @click="setPos('fixed')">
+      <v-btn
+        :dark="dark"
+        plain
+        height="100%"
+        width="100%"
+        @click="setPos('fixed')"
+      >
         Right
       </v-btn>
     </nuxt-link>
@@ -31,9 +69,12 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  computed: mapGetters('siteBase', ['pos']),
+  computed: mapGetters('siteBase', ['pos', 'dark']),
   methods: {
-    ...mapActions('siteBase', ['setPos']),
+    ...mapActions('siteBase', ['setPos', 'toggledark']),
+    anmationend: function () {
+      this.$refs.logo.classList.remove('anmation')
+    },
   },
 }
 </script>
@@ -44,6 +85,11 @@ export default {
   align-items: center;
   overflow: hidden;
   transition: 0.8s;
+  perspective: 1000px;
+
+  a {
+    height: 100%;
+  }
 
   &::after,
   &::after {
@@ -55,6 +101,7 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
+    transition: background 0.8s;
   }
 
   .Left,
@@ -74,13 +121,13 @@ export default {
     }
   }
 
-  @media (max-width: 700px) {
-    flex-direction: column;
-  }
-
   &.static {
     position: relative;
     height: 100vh;
+
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
 
     @media (max-width: 700px) {
       .Right {
@@ -124,28 +171,49 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: transparent;
+      gap: 10px;
+      flex-direction: column;
       position: relative;
       z-index: 4;
       width: 80px;
       height: 80px;
-      animation: land 3s ease forwards;
       transition: 0.8s;
-      border-radius: 50%;
-      overflow: visible;
 
-      img {
-        scale: 1;
-        background: white;
-        transition: 0.8s;
-        padding: 5px;
+      &.anmation {
+        animation: land 3s ease forwards;
+        pointer-events: none;
+      }
+
+      .button {
+        display: flex;
+        height: 80px;
+        width: 80px;
+        overflow: hidden;
+        background: transparent;
+        z-index: 2;
+
+        .logo {
+          object-fit: cover;
+          transition: 0.3s;
+          height: 80px;
+          width: 80px;
+        }
+      }
+
+      .set {
+        margin: -5em -3em;
+        transition: 0.3s;
       }
 
       &:hover {
-        scale: 2;
+        transform: translate(0, 0, 650px);
 
-        img {
-          // scale: 1.6;
+        .button {
+          transform: scale(1.2);
+        }
+
+        .set {
+          margin: 0;
         }
       }
     }
@@ -156,6 +224,19 @@ export default {
     display: flex;
     height: 50px;
     position: relative;
+
+    .button {
+      padding: 0;
+      overflow: hidden;
+
+      .logo {
+        height: 100%;
+        height: 80px;
+        width: 100%;
+        width: 80px;
+        object-fit: cover;
+      }
+    }
 
     .Left,
     .Right {
