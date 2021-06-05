@@ -1,10 +1,10 @@
 <template>
   <header
     class="baseHeader"
-    :class="[$route.name == 'index' ? pos : 'fixed', $route.name]"
+    :class="[$route.name == 'index' ? pos : 'fixed', class_name]"
   >
     <!-- left -->
-    <nuxt-link to="Left" class="Left">
+    <nuxt-link to="/Left" class="Left">
       <v-btn
         :dark="dark"
         plain
@@ -50,7 +50,7 @@
     </div>
 
     <!-- right -->
-    <nuxt-link to="Right" class="Right">
+    <nuxt-link to="/Right" class="Right">
       <v-btn
         :dark="dark"
         plain
@@ -58,7 +58,13 @@
         width="100%"
         @click="setPos('fixed')"
       >
-        Right
+        <div class="v-btn_content">
+          <div>Right</div>
+          <div class="links">
+            <nuxt-link to="/Right/One">One</nuxt-link>
+            <nuxt-link to="/Right/Two">Two</nuxt-link>
+          </div>
+        </div>
       </v-btn>
     </nuxt-link>
   </header>
@@ -69,12 +75,21 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  computed: mapGetters('siteBase', ['pos', 'dark']),
+  name: 'HeaderComponent',
+  computed: {
+    ...mapGetters('siteBase', ['pos', 'dark']),
+    class_name: function () {
+      return this.$route.path.toString().split('/')
+    },
+  },
   methods: {
     ...mapActions('siteBase', ['setPos', 'toggledark']),
     anmationend: function () {
       this.$refs.logo.classList.remove('anmation')
     },
+  },
+  mounted() {
+    console.log(this.class_name)
   },
 }
 </script>
@@ -157,6 +172,28 @@ export default {
 
       &:hover {
         flex: 1.2;
+
+        .links a {
+          bottom: 0;
+
+          &:nth-of-type(2) {
+            transition-delay: 0.3s;
+            z-index: 1;
+          }
+        }
+      }
+      .links {
+        overflow: hidden;
+        position: absolute;
+
+        a {
+          transition: 0.3s;
+          z-index: 2;
+          display: block;
+          position: relative;
+          bottom: -50px;
+          margin: 5px 10px;
+        }
       }
     }
 
@@ -195,8 +232,9 @@ export default {
         .logo {
           object-fit: cover;
           transition: 0.3s;
-          height: 80px;
-          width: 80px;
+          height: 2em;
+          width: 2em;
+          // background: white;
         }
       }
 

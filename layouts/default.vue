@@ -22,6 +22,6 @@ export default {
 
 <style>
 .dark {
-  background: #333 !important;
+  background: #40485b !important;
 }
 </style>
