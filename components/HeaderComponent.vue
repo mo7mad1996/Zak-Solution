@@ -4,7 +4,7 @@
     :class="[$route.name == 'index' ? pos : 'fixed', class_name]"
   >
     <!-- left -->
-    <nuxt-link to="/Left" class="Left">
+    <nuxt-link to="/left" class="left">
       <v-btn
         :dark="dark"
         plain
@@ -12,7 +12,7 @@
         width="100%"
         @click="setPos('fixed')"
       >
-        Left
+        left
       </v-btn>
     </nuxt-link>
 
@@ -50,7 +50,7 @@
     </div>
 
     <!-- right -->
-    <nuxt-link to="/Right" class="Right">
+    <nuxt-link to="/right" class="right">
       <v-btn
         :dark="dark"
         plain
@@ -59,10 +59,10 @@
         @click="setPos('fixed')"
       >
         <div class="v-btn_content">
-          <div>Right</div>
+          <div>right</div>
           <div class="links">
-            <nuxt-link to="/Right/One">One</nuxt-link>
-            <nuxt-link to="/Right/Two">Two</nuxt-link>
+            <nuxt-link to="/right/One">One</nuxt-link>
+            <nuxt-link to="/right/Two">Two</nuxt-link>
           </div>
         </div>
       </v-btn>
@@ -119,8 +119,8 @@ export default {
     transition: background 0.8s;
   }
 
-  .Left,
-  .Right {
+  .left,
+  .right {
     transition: 0.8s;
 
     &::after,
@@ -145,24 +145,24 @@ export default {
     }
 
     @media (max-width: 700px) {
-      .Right {
+      .right {
         margin-top: -40px;
       }
-      .Left {
+      .left {
         margin-bottom: -40px;
       }
     }
     @media (min-width: 700px) {
-      .Right {
+      .right {
         margin-left: -40px;
       }
-      .Left {
+      .left {
         margin-right: -40px;
       }
     }
 
-    .Left,
-    .Right {
+    .left,
+    .right {
       flex: 1;
       position: relative;
       height: 100%;
@@ -197,10 +197,10 @@ export default {
       }
     }
 
-    .Right::after {
+    .right::after {
       background: #3b6ce340;
     }
-    .Left::after {
+    .left::after {
       background: #e33b6c40;
     }
 
@@ -276,29 +276,29 @@ export default {
       }
     }
 
-    .Left,
-    .Right {
+    .left,
+    .right {
       flex: 1;
     }
 
-    &.Right {
+    &.right {
       &::after {
         content: '';
         background: #3b6ce340;
       }
 
-      .Left {
+      .left {
         flex: 0;
       }
     }
 
-    &.Left {
+    &.left {
       &::after {
         content: '';
         background: #e33b6c40;
       }
 
-      .Right {
+      .right {
         flex: 0;
       }
     }
